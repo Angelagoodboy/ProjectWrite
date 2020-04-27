@@ -1,5 +1,6 @@
 from  tkinter import filedialog
-import  OpenFile
+import  OpenFile,struct
+import struct
 
 def get_BMWSTM32():
     return  0b000001
@@ -56,9 +57,9 @@ class CommboxEvent:
     data_frame_length = intToBytes(0x99,1)   # 数据帧总长度
     cmd = intToBytes(0x86,1)  # 命令位cmd
     command_class = intToBytes(0x0000000,4)  # 命令类容4字节
-    written_head = bytes('GPMCU_H', 'utf-8')
+    written_head = 'GPMCU_H'.encode('utf-8')
     writeen_bit =bytes(3)  # 根据车型的可变解码器号3字节
-    target=bytearray(16)
+    target=bytes(16)
 
 
     def _init_(self):
@@ -66,10 +67,12 @@ class CommboxEvent:
 
     def comboxselectEvent(self,value):
         #完成数据准备
-        print('选择下拉列表框值为',value)
-        self.writeen_bit=intToBytes(switcher[value],3)
-        self.target=[self.head,self.data_frame_length,self.cmd,self.command_class,self.written_head,self.writeen_bit]
 
+        print('选择下拉列表框值为',value)
+        self.writeen_bit=bin(switcher[value])
+        self.target=struct.pack(bin(0xff55),bin(0x99),bin(0x86),bin(0x0000000),self.written_head,self.writeen_bit)
+
+        print('self.target')
 
 
         print(self.target)
@@ -86,5 +89,8 @@ class CommboxEvent:
 
 
         '写入到文件'
-        OpenFile.writeFile(OpenFile.file_path,self.target)
+        TargetData=OpenFile.readFile(OpenFile.file_path,self.target)
+        TARGET_PATH=OpenFile.getFile_target_path(OpenFile.file_path,self.Folderpath)
+        OpenFile.writeFile(TARGET_PATH,self.target)
+
 

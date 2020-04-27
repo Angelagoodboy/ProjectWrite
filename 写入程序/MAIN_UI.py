@@ -44,7 +44,7 @@ class  MainActivity(object):
         label_carType = tkinter.Label(text="选择车型", font=('Arial', 10)).place(x=60, y=40, width=100, height=30)
         comvalue = tkinter.StringVar()  # 窗体自带的文本，新建一个值
         comboxlist = ttk.Combobox(self.root, textvariable=comvalue)  # 初始化
-        comboxlist["values"] = ("宝马STM32F105RBT6", "宝马8823", "8368奥迪高配", "8368奥迪低配","8368奥迪Q7换屏","8368雷克萨斯","8368宝马NBT","8368宝马CIC","8368奔驰1"
+        comboxlist["values"] = ("选择车型","宝马STM32F105RBT6", "宝马8823", "8368奥迪高配", "8368奥迪低配","8368奥迪Q7换屏","8368雷克萨斯","8368宝马NBT","8368宝马CIC","8368奔驰1"
                                                                                                                                      "8368奔驰2")
         comboxlist.current(0)  # 选择第一个
         comboxlist.bind("<<ComboboxSelected>>", lambda event :self.callback_combobox(comboxlist.get()))
